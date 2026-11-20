@@ -1,0 +1,4 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="panel empty error-page"><span>⚠</span><h1>{{ title }}</h1><p>{{ message }}</p><a href="{{ url_for('dashboard') }}" class="btn primary">Back to dashboard</a></div>
+{% endblock %}

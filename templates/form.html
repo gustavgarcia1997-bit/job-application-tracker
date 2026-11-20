@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow"><a href="{{ url_for('list_page', resource=resource) }}">{{ resource.title() }}</a> / EDITOR</p><h1>{{ title }}</h1><p>Fields marked * are required.</p></div></div>
+<section class="panel form-panel">
+  <form method="post" novalidate>
+    <input type="hidden" name="csrf" value="{{ csrf_token }}">
+    <div class="form-grid">
+      {% for field in config.fields %}
+      {% set kind = field.get('type', 'text') %}
+      {% set value = form.get(field.name, '') %}
+      <div class="field {% if kind == 'textarea' or kind == 'checkbox' %}span-two{% endif %}">
+        {% if kind == 'checkbox' %}
+          <label class="checkbox-label"><input type="checkbox" name="{{ field.name }}" value="1" {% if value and value != '0' %}checked{% endif %}> {{ field.label }}</label>
+        {% else %}
+          <label for="{{ field.name }}">{{ field.label }}{% if field.get('required') %} <span class="required">*</span>{% endif %}</label>
+          {% if kind == 'textarea' %}
+            <textarea id="{{ field.name }}" name="{{ field.name }}" rows="3" {% if field.get('required') %}required{% endif %}>{{ value if value is not none else '' }}</textarea>
+          {% elif kind == 'company' or kind == 'job' %}
+            <select id="{{ field.name }}" name="{{ field.name }}" {% if field.get('required') %}required{% endif %}>
+              <option value="">Select {{ field.label.lower() }}</option>
+              {% for option in choices.get(kind, []) %}<option value="{{ option.id }}" {% if value|string == option.id|string %}selected{% endif %}>{{ option.title }}</option>{% endfor %}
+            </select>
+            {% if not choices.get(kind, []) %}<small class="input-hint">Create a {{ 'company' if kind == 'company' else 'job' }} first, then return to this form.</small>{% endif %}
+          {% elif kind == 'select' %}
+            <select id="{{ field.name }}" name="{{ field.name }}" {% if field.get('required') %}required{% endif %}>
+              <option value="">Select an option</option>
+              {% for option in field.options %}<option value="{{ option }}" {% if value == option %}selected{% endif %}>{{ option }}</option>{% endfor %}
+            </select>
+          {% else %}
+            <input id="{{ field.name }}" name="{{ field.name }}" type="{{ kind }}" {% if kind == 'number' %}min="0" step="0.01"{% endif %} {% if field.get('maxlen') %}maxlength="{{ field.maxlen }}"{% endif %} value="{{ value if value is not none else '' }}" {% if field.get('required') %}required{% endif %}>
+          {% endif %}
+          {% if field.get('hint') %}<small class="input-hint">{{ field.hint }}</small>{% endif %}
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="form-actions"><a href="{{ url_for('list_page', resource=resource) }}" class="btn secondary">Cancel</a><button type="submit" class="btn primary">{{ action }}</button></div>
+  </form>
+</section>
+{% endblock %}
