@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">SMART COMPARISON</p><h1>Find your job match <span class="sparkle">✦</span></h1><p>See how your skills line up with the requirements for each saved job.</p></div></div>
+<section class="panel search-panel">
+  <form method="get" action="{{ url_for('match_page') }}">
+    <label for="skills">Your skills</label>
+    <div class="search-row"><input id="skills" type="text" name="skills" value="{{ skills_text }}" placeholder="Python, SQL, Linux, Networking" aria-describedby="skill-hint"><button class="btn primary" type="submit">Calculate matches</button></div>
+    <small id="skill-hint" class="input-hint">Separate skills with commas. Comparisons ignore capitalization and extra spaces.</small>
+  </form>
+</section>
+{% if searched %}
+  <div class="results-heading"><h2>Matches for {{ user_skills | length }} skill{{ '' if user_skills|length == 1 else 's' }}</h2><span class="count-chip">{{ results | length }} jobs</span></div>
+  {% if results %}
+    <div class="match-grid">
+    {% for job in results %}
+      <article class="panel match-card"><div class="match-card-top"><div><p class="eyebrow">{{ job.company_name }}</p><h3>{{ job.job_title }}</h3><span class="muted">{{ job.location or job.job_type or 'Job opening' }}</span></div>
+        <div class="score-ring {% if job.score is none %}unknown{% elif job.score >= 75 %}strong{% elif job.score >= 40 %}medium{% else %}weak{% endif %}">
+          <strong>{{ job.score|string ~ '%' if job.score is not none else 'N/A' }}</strong><small>match</small>
+        </div></div>
+        {% if job.score is none %}<p class="muted">Add required skills to this job to calculate a match.</p>
+        {% else %}
+        <div class="progress"><div style="width:{{ job.score }}%"></div></div>
+        <div class="skills-group"><strong>Matched skills</strong><div class="skill-chips">{% for skill in job.matched %}<span class="skill matched">✓ {{ skill }}</span>{% else %}<span class="muted">No matching skills</span>{% endfor %}</div></div>
+        <div class="skills-group"><strong>Missing skills</strong><div class="skill-chips">{% for skill in job.missing %}<span class="skill missing">{{ skill }}</span>{% else %}<span class="muted">None!</span>{% endfor %}</div></div>
+        {% endif %}
+        <div class="match-actions"><a class="text-link" href="{{ url_for('edit_page', resource='jobs', item_id=job.job_id) }}">Edit requirements →</a><a class="btn secondary small" href="{{ url_for('create_page', resource='applications', job_id=job.job_id) }}">Track application</a></div>
+      </article>
+    {% endfor %}
+    </div>
+  {% else %}<div class="panel empty"><h3>No jobs saved yet</h3><p>Add a job and its required skills to see results.</p><a class="btn primary" href="{{ url_for('create_page', resource='jobs') }}">+ Add a job</a></div>{% endif %}
+{% else %}
+<div class="panel empty"><span>✦</span><h3>Ready when you are</h3><p>Enter a few of your skills above to calculate match percentages for every job.</p></div>
+{% endif %}
+{% endblock %}

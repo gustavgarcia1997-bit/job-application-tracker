@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Course project: Job Application Tracker">
+  <title>{{ title }} · JobTrack</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-logo">JT</span><span>JobTrack<small>YOUR CAREER DASHBOARD</small></span></a>
+      <div class="nav-caption">WORKSPACE</div>
+      <nav aria-label="Main navigation">
+        <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.path == '/' %}active{% endif %}"><span>◫</span> Dashboard</a>
+        {% for key, info in resources.items() %}
+        <a href="{{ url_for('list_page', resource=key) }}" class="nav-link {% if request.path.startswith('/' ~ key ~ '/') or request.path == '/' ~ key %}active{% endif %}"><span>{{ info.icon }}</span> {{ key.title() }}</a>
+        {% endfor %}
+        <a href="{{ url_for('match_page') }}" class="nav-link {% if request.path == '/match' %}active{% endif %}"><span>✦</span> Job Match</a>
+      </nav>
+      <div class="side-note"><strong>Built for COP4751</strong><span>MySQL · Flask · Python</span></div>
+    </aside>
+    <div class="main-wrap">
+      <header class="topbar"><span>Job Application Tracker</span><span class="course-tag">COURSE PROJECT</span></header>
+      <main class="content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div role="alert" class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+      </main>
+      <footer>JobTrack · Powered by Python, Flask, and MySQL</footer>
+    </div>
+  </div>
+</body>
+</html>
