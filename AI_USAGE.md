@@ -1,58 +1,39 @@
 # AI Usage Documentation — Job Application Tracker
 
-> **Important:** This file documents the AI assistance used to prepare the project scaffold. The student should review it, add their real testing/debugging experiences, and remove any statement that does not accurately describe their own work before submitting. The template below intentionally does not invent testing, personal modifications, or outcomes.
+## AI Tool Used
 
-## AI tool used
+I used ChatGPT to help me build my Job Application Tracker project using Python, Flask, MySQL, HTML, and CSS. AI helped me generate the first version of the code and guided me through setting everything up on my computer.
 
-**ChatGPT (OpenAI)** was used to help plan and generate a first working draft of the Job Application Tracker, including Python, Flask, MySQL SQL scripts, HTML/CSS, project structure, validation, matching logic, and the initial README.
+## Key Prompts I Used
 
-## Key prompts / requests
+- Help me build a Job Application Tracker with four MySQL tables, Flask, HTML, and CSS.
+- Help me set up my database and connect it to Flask.
+- Walk me through installing Python and running my application.
+- Help me test the CRUD functions and Job Match feature.
+- Help me upload my project and demonstration video to GitHub.
 
-1. **Project instructions shared:** "Course Project: Job Application Tracker ... Build a complete web application ... MySQL ... Python with Flask ... HTML/CSS ... CRUD on all four tables ... Job Match feature ... AI_USAGE.md ... video demo."
-2. **Earlier course context reused:** four related tables named `companies`, `jobs`, `applications`, and `contacts`; MySQL database `job_tracker`; JSON for job requirements and interview data.
+## What AI Helped Generate
 
-Add other actual prompts here if you use AI for further changes or troubleshooting:
+ChatGPT helped generate `app.py`, `database.py`, `matching.py`, the SQL scripts, HTML templates, CSS styling, and initial project documentation. It also helped organize the relationships between companies, jobs, applications, and contacts.
 
-- `[Add the exact prompt you used, or remove this placeholder.]`
+## Changes and Testing I Did
 
-## What AI helped generate
+I set up MySQL Workbench and imported the database schema myself. I also imported sample records, installed Python and the necessary packages, and configured my local database connection.
 
-- `schema.sql`: four linked tables, primary/foreign keys, JSON columns, indexes.
-- `database.py`: centralized MySQL connection and parameterized CRUD functions.
-- `app.py`: Flask routes, forms, field validation, CSRF protections, dashboard, and error handling.
-- `matching.py`: exact, case-insensitive skill comparisons and percent calculations.
-- `templates/` and `static/style.css`: responsive user interface and reusable templates.
-- `README.md` and `VIDEO_CHECKLIST.md`: installation/submission instructions.
-- `tests/test_matching.py`: automated tests for matching behavior.
+Once the application was running, I tested adding, editing, and deleting companies and jobs. I changed a test company's name and location information and updated a test job's salary before deleting those test records.
 
-## Changes I personally made after receiving AI output
+I also tested Job Match with Python, SQL, Linux, and Networking. The results showed 100% for Junior Security Analyst and 25% for Backend Developer, which matched the required skills.
 
-**Complete this section truthfully based on your actual work.** Examples of changes you *might* make include adjusting the app styling, matching your earlier SQL schema, changing sample records, rewriting a form label, or debugging a connection error. Do not claim these changes unless you really did them.
+I organized the HTML, CSS, and test files into the correct GitHub folders and recorded a 6-minute, 34-second demonstration video.
 
-- `[Your actual change and why you made it.]`
-- `[Your actual debugging fix or test outcome.]`
+I did not complete manual CRUD testing for Applications and Contacts or test the project from a fresh clone.
 
-## How I verified the code
+## What I Learned
 
-**Complete after running the project on your computer.** Check off only tests you really performed:
+One thing I learned from this project is how Flask connects the website to a MySQL database. Before doing this, I understood SQL commands separately, but actually seeing information added through the website and saved in MySQL made it easier to understand how everything works together.
 
-- [ ] Created/imported all four MySQL tables using `schema.sql`
-- [ ] Started Flask and opened the website
-- [ ] Created, listed, edited, and deleted a company
-- [ ] Created, listed, edited, and deleted a job
-- [ ] Created, listed, edited, and deleted an application
-- [ ] Created, listed, edited, and deleted a contact
-- [ ] Calculated a job-skill match percentage and checked the result manually
-- [ ] Used MySQL Workbench to confirm changes reached the database
-- [ ] Tested setup from a fresh clone
-- [ ] Recorded and uploaded the required 3–7 minute demo video
+I also learned more about Python dependencies, database connections, and why the folder structure matters. ChatGPT helped me when I got stuck, especially during setup, but I still had to run the commands, fix problems, and verify the results myself.
 
-## What I learned from using AI
+## Responsible AI Use
 
-Write your own reflection here. Some ideas: how Flask routes call reusable database functions, why SQL parameters are safer than concatenating strings, the benefits of a normalized relational schema, how JSON helps store flexible requirements, and why AI-generated code still requires testing against a real MySQL database.
-
-`[Add a few sentences about what you actually understood, verified, and found helpful or unhelpful.]`
-
-## Responsible use
-
-AI was used as a development assistant. The final submission should reflect code the student inspected, tested, and can explain. No claim is made that the generated app was already run with the student's MySQL server.
+I used AI as a development and troubleshooting tool. I reviewed the application by running it locally and testing the features described above. AI-generated code still needs to be checked because it is not guaranteed to work correctly without testing.
